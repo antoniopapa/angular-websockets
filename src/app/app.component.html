@@ -20,23 +20,26 @@
       </div>
 
       <div id="conversation">
-        <div class="row pt-2">
-          <div class="col-6">
-            <div class="alert alert-primary d-inline-block" role="alert">
-              Hi
+        @for (message of messages; track message) {
+          <div class="row pt-2">
+            <div class="col-6">
+              <div class="alert alert-primary d-inline-block" role="alert">
+                {{ message }}
+              </div>
             </div>
+            <div class="col-6"></div>
           </div>
-          <div class="col-6"></div>
-        </div>
+        }
 
-        <div class="row pt-2">
-          <div class="col-6"></div>
-          <div class="col-6">
-            <div class="alert alert-success d-inline-block float-end" role="alert">
-              Hello There
-            </div>
-          </div>
-        </div>
+
+        <!--        <div class="row pt-2">-->
+        <!--          <div class="col-6"></div>-->
+        <!--          <div class="col-6">-->
+        <!--            <div class="alert alert-success d-inline-block float-end" role="alert">-->
+        <!--              Hello There-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
 
       <form id="reply" class="p-3 w-100" [formGroup]="form" (submit)="submit()">
