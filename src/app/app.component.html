@@ -39,9 +39,9 @@
         </div>
       </div>
 
-      <form id="reply" class="p-3 w-100">
+      <form id="reply" class="p-3 w-100" [formGroup]="form" (submit)="submit()">
         <div class="input-group">
-          <input class="form-control" placeholder="Write a message"/>
+          <input class="form-control" placeholder="Write a message" formControlName="message"/>
         </div>
       </form>
 
