@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MessageService} from "../../services/message.service";
-import {SocketService} from "../../services/socket.service";
+import {MessageService} from "../../../services/message.service";
+import {SocketService} from "../../../services/socket.service";
 
 @Component({
   selector: 'app-chat',
