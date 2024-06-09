@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterOutlet} from "@angular/router";
+import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../classes/user";
 
@@ -7,7 +7,8 @@ import {User} from "../../classes/user";
   selector: 'app-secure',
   standalone: true,
   imports: [
-    RouterOutlet
+    RouterOutlet,
+    RouterLink
   ],
   templateUrl: './secure.component.html',
   styleUrl: './secure.component.css'
@@ -16,7 +17,8 @@ export class SecureComponent implements OnInit {
   user!: User;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 
@@ -25,8 +27,8 @@ export class SecureComponent implements OnInit {
       next: (response: any) => {
         this.user = response;
       },
-      error: err => {
-        console.log(err)
+      error: () => {
+        this.router.navigate(["/login"]);
       }
     })
   }

@@ -18,7 +18,11 @@ export class AuthService {
     return this.http.post(`${environment.api}/login`, data);
   }
 
-  user(){
+  user() {
     return this.http.get(`${environment.api}/user`);
+  }
+
+  update(data: any) {
+    return this.http.put(`${environment.api}/user`, data);
   }
 }
