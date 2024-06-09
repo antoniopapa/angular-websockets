@@ -17,4 +17,8 @@ export class AuthService {
   login(data: any) {
     return this.http.post(`${environment.api}/login`, data);
   }
+
+  user(){
+    return this.http.get(`${environment.api}/user`);
+  }
 }
