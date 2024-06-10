@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../classes/user";
+import {currentUser} from "../../signals/user";
 
 @Component({
   selector: 'app-secure',
@@ -14,7 +15,7 @@ import {User} from "../../classes/user";
   styleUrl: './secure.component.css'
 })
 export class SecureComponent implements OnInit {
-  user!: User;
+  full_name = computed(() => currentUser()?.first_name + " " + currentUser()?.last_name)
 
   constructor(
     private authService: AuthService,
@@ -25,11 +26,14 @@ export class SecureComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user().subscribe({
       next: (response: any) => {
-        this.user = response;
+        currentUser.set(response);
       },
       error: () => {
+        currentUser.set(null);
         this.router.navigate(["/login"]);
       }
     })
   }
+
+  protected readonly currentUser = currentUser;
 }
