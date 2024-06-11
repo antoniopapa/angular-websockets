@@ -20,7 +20,7 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-          {path: 'users/:id', component: ChatComponent},
+          {path: 'rooms/:id', component: ChatComponent},
         ]
       }
     ]

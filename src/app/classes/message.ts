@@ -3,6 +3,5 @@ export class Message {
   content!: string;
   type!: string;
   sender!: any;
-  receiver!: any;
   created_at!: string
 }

@@ -6,6 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Message} from "../../../../classes/message";
 import {currentUser} from "../../../../signals/user";
 import {UploadComponent} from "../../../../components/upload/upload.component";
+import {Room} from "../../../../classes/room";
+import {User} from "../../../../classes/user";
 
 @Component({
   selector: 'app-chat',
@@ -22,8 +24,10 @@ export class ChatComponent implements OnInit {
   form: FormGroup;
   messages: Message[] = [];
   protected readonly currentUser = currentUser;
-  page = 0;
+  page = 1;
   last_page = false;
+  room!: Room;
+  id!: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,27 +41,39 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socketService.getMessages().subscribe((message: any) => {
-      this.messages.push(message);
-    });
+    this.route.params.subscribe((value: any) => {
+      this.id = value.id;
 
-    this.loadMore()
+      this.socketService.getMessages().subscribe((message: any) => {
+        this.messages.push(message);
+      });
+
+      this.load()
+    })
   }
 
   loadMore() {
     this.page++;
-    this.messageService.all(this.route.snapshot.params["id"], this.page).subscribe({
+    this.load()
+  }
+
+  load() {
+    this.messageService.all(this.id, this.page).subscribe({
       next: (response: any) => {
+        this.room = response.room;
         this.messages = this.page === 1 ? response.messages : [...response.messages, ...this.messages]
         this.last_page = response.messages.length === 0;
       }
     })
   }
 
+  members() {
+    return this.room?.members.map((m: User) => m.first_name + ' ' + m.last_name).join(', ');
+  }
+
   submit() {
     const formData = this.form.getRawValue();
-    formData["receiver_id"] = this.route.snapshot.params["id"];
-    this.messageService.create(formData).subscribe({
+    this.messageService.create(this.id, formData).subscribe({
       next: (response) => {
         console.log(response);
       },

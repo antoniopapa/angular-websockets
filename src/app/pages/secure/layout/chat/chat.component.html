@@ -1,5 +1,5 @@
 <div id="head" class="py-3 lh-sm border-bottom">
-  <strong class="mb-1">Members: </strong>
+  <strong class="mb-1">Members: {{ members() }} </strong>
 </div>
 
 <div id="conversation">
@@ -30,7 +30,7 @@
         }
       </div>
 
-      @if (message.receiver?.id === currentUser()?.id) {
+      @if (message.sender?.id !== currentUser()?.id) {
         <div class="col-6"></div>
       }
     </div>

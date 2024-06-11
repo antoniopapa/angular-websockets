@@ -11,14 +11,14 @@ export class MessageService {
   }
 
   all(id: number, page = 1) {
-    return this.http.get(`${environment.api}/users/${id}/messages?page=${page}`);
+    return this.http.get(`${environment.api}/rooms/${id}/messages?page=${page}`);
   }
 
-  create(data: any) {
-    return this.http.post(`${environment.api}/messages`, data);
+  create(id: number, data: any) {
+    return this.http.post(`${environment.api}/rooms/${id}/messages`, data);
   }
 
-  sendImage(data: any) {
-    return this.http.post(`${environment.api}/images`, data);
+  sendImage(id: number, data: any) {
+    return this.http.post(`${environment.api}/rooms/${id}/images`, data);
   }
 }

@@ -24,9 +24,8 @@ export class UploadComponent {
 
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("receiver_id", this.route.snapshot.params["id"]);
 
-    this.messageService.sendImage(formData).subscribe({
+    this.messageService.sendImage(this.route.snapshot.params["id"], formData).subscribe({
       next: () => {
         console.log('success')
       }
