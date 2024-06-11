@@ -5,13 +5,15 @@ import {SocketService} from "../../../../services/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {Message} from "../../../../classes/message";
 import {currentUser} from "../../../../signals/user";
+import {UploadComponent} from "../../../../components/upload/upload.component";
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    UploadComponent
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
@@ -19,6 +21,7 @@ import {currentUser} from "../../../../signals/user";
 export class ChatComponent implements OnInit {
   form: FormGroup;
   messages: Message[] = [];
+  protected readonly currentUser = currentUser;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,7 +30,7 @@ export class ChatComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.form = this.formBuilder.group({
-      message: ''
+      content: ''
     })
   }
 
@@ -44,7 +47,9 @@ export class ChatComponent implements OnInit {
   }
 
   submit() {
-    this.messageService.create(this.form.getRawValue()).subscribe({
+    const formData = this.form.getRawValue();
+    formData["receiver_id"] = this.route.snapshot.params["id"];
+    this.messageService.create(formData).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -53,6 +58,4 @@ export class ChatComponent implements OnInit {
       }
     })
   }
-
-  protected readonly currentUser = currentUser;
 }
