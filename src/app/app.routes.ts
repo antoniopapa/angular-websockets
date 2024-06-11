@@ -5,6 +5,7 @@ import {LoginComponent} from "./pages/login/login.component";
 import {SecureComponent} from "./pages/secure/secure.component";
 import {AccountComponent} from "./pages/secure/account/account.component";
 import {LayoutComponent} from "./pages/secure/layout/layout.component";
+import {RoomCreateComponent} from "./pages/secure/room-create/room-create.component";
 
 export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -14,6 +15,7 @@ export const routes: Routes = [
     component: SecureComponent,
     children: [
       {path: 'account', component: AccountComponent},
+      {path: 'rooms/create', component: RoomCreateComponent},
       {
         path: '',
         component: LayoutComponent,

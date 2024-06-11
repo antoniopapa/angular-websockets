@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterLink, RouterOutlet} from "@angular/router";
-import {UserService} from "../../../services/user.service";
-import {User} from "../../../classes/user";
+import {RoomService} from "../../../services/room.service";
+import {Room} from "../../../classes/room";
 
 @Component({
   selector: 'app-layout',
@@ -14,10 +14,10 @@ import {User} from "../../../classes/user";
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent implements OnInit {
-  users: User[] = [];
+  rooms: Room[] = [];
   s = '';
 
-  constructor(private userService: UserService) {
+  constructor(private roomService: RoomService) {
   }
 
   ngOnInit(): void {
@@ -30,9 +30,9 @@ export class LayoutComponent implements OnInit {
   }
 
   load() {
-    this.userService.all(this.s).subscribe({
+    this.roomService.all(this.s).subscribe({
       next: (response: any) => {
-        this.users = response;
+        this.rooms = response;
       },
       error: err => {
         console.log(err);
