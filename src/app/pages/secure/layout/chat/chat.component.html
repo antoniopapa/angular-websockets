@@ -1,8 +1,14 @@
 <div id="head" class="py-3 lh-sm border-bottom">
-  <strong class="mb-1">Members: John Doe, Jane Smith</strong>
+  <strong class="mb-1">Members: </strong>
 </div>
 
 <div id="conversation">
+  @if (!last_page) {
+    <div class="text-center py-1">
+      <a href="javascript:void(0)" class="alert-link" (click)="loadMore()">Load more recent</a>
+    </div>
+  }
+
   @for (message of messages; track message) {
     <div class="row pt-2">
       @if (message.sender?.id === currentUser()?.id) {
@@ -33,7 +39,7 @@
 
 <form id="reply" class="p-3 w-100" [formGroup]="form" (submit)="submit()">
   <div class="input-group">
-    <app-upload />
+    <app-upload/>
     <input class="form-control" placeholder="Write a message" formControlName="content"/>
   </div>
 </form>

@@ -22,6 +22,8 @@ export class ChatComponent implements OnInit {
   form: FormGroup;
   messages: Message[] = [];
   protected readonly currentUser = currentUser;
+  page = 0;
+  last_page = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,9 +41,15 @@ export class ChatComponent implements OnInit {
       this.messages.push(message);
     });
 
-    this.messageService.all(this.route.snapshot.params["id"]).subscribe({
+    this.loadMore()
+  }
+
+  loadMore() {
+    this.page++;
+    this.messageService.all(this.route.snapshot.params["id"], this.page).subscribe({
       next: (response: any) => {
-        this.messages = response.messages;
+        this.messages = this.page === 1 ? response.messages : [...response.messages, ...this.messages]
+        this.last_page = response.messages.length === 0;
       }
     })
   }

@@ -10,8 +10,8 @@ export class MessageService {
   constructor(private http: HttpClient) {
   }
 
-  all(id: number) {
-    return this.http.get(`${environment.api}/users/${id}/messages`);
+  all(id: number, page = 1) {
+    return this.http.get(`${environment.api}/users/${id}/messages?page=${page}`);
   }
 
   create(data: any) {
