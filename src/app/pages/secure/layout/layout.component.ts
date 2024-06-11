@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RouterLink, RouterOutlet} from "@angular/router";
 import {RoomService} from "../../../services/room.service";
 import {Room} from "../../../classes/room";
+import {Message} from "../../../classes/message";
 
 @Component({
   selector: 'app-layout',
@@ -38,5 +39,25 @@ export class LayoutComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  showDate(last_message: Message | null) {
+    if (last_message === null) return '';
+
+    return new Date(last_message.created_at).toLocaleDateString('en-US', {
+      weekday: 'short',
+      hour: 'numeric',
+      minute: 'numeric'
+    })
+  }
+
+  showLastMessage(last_message: Message | null) {
+    if (last_message === null) return '';
+
+    if (last_message.type === 'image') {
+      return 'image';
+    }
+
+    return last_message.content;
   }
 }

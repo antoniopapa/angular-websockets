@@ -4,4 +4,5 @@ export class Message {
   type!: string;
   sender!: any;
   receiver!: any;
+  created_at!: string
 }
