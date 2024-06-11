@@ -13,4 +13,8 @@ export class RoomService {
   all(s = '') {
     return this.http.get(`${environment.api}/rooms?name=${s}`);
   }
+
+  create(data: any) {
+    return this.http.post(`${environment.api}/rooms`, data);
+  }
 }
