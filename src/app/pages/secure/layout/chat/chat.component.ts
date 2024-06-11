@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MessageService} from "../../../../services/message.service";
 import {SocketService} from "../../../../services/socket.service";
+import {ActivatedRoute} from "@angular/router";
+import {Message} from "../../../../classes/message";
+import {currentUser} from "../../../../signals/user";
 
 @Component({
   selector: 'app-chat',
@@ -15,12 +18,13 @@ import {SocketService} from "../../../../services/socket.service";
 })
 export class ChatComponent implements OnInit {
   form: FormGroup;
-  messages: string[] = [];
+  messages: Message[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private route: ActivatedRoute
   ) {
     this.form = this.formBuilder.group({
       message: ''
@@ -31,6 +35,12 @@ export class ChatComponent implements OnInit {
     this.socketService.getMessages().subscribe((message: any) => {
       this.messages.push(message);
     });
+
+    this.messageService.all(this.route.snapshot.params["id"]).subscribe({
+      next: (response: any) => {
+        this.messages = response.messages;
+      }
+    })
   }
 
   submit() {
@@ -43,4 +53,6 @@ export class ChatComponent implements OnInit {
       }
     })
   }
+
+  protected readonly currentUser = currentUser;
 }

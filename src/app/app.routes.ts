@@ -18,7 +18,7 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-          {path: '', component: ChatComponent},
+          {path: 'users/:id', component: ChatComponent},
         ]
       }
     ]

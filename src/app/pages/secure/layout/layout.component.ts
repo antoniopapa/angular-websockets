@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterOutlet} from "@angular/router";
+import {RouterLink, RouterOutlet} from "@angular/router";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../classes/user";
 
@@ -7,7 +7,8 @@ import {User} from "../../../classes/user";
   selector: 'app-layout',
   standalone: true,
   imports: [
-    RouterOutlet
+    RouterOutlet,
+    RouterLink
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'

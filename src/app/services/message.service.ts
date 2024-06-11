@@ -3,14 +3,18 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class MessageService {
 
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    create(data: any) {
-        return this.http.post(`${environment.api}/message`, data);
-    }
+  all(id: number) {
+    return this.http.get(`${environment.api}/users/${id}/messages`);
+  }
+
+  create(data: any) {
+    return this.http.post(`${environment.api}/message`, data);
+  }
 }
